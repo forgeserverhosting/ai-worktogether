@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="One prompt. Multiple AI providers. One polished result." />
+  <meta name="theme-color" content="#080a12" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>OmniFusion AI</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div>
+  <div class="ambient ambient-b"></div>
+  <div class="grid-noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="OmniFusion AI home">
+      <span class="brand-mark"><i></i><i></i><i></i></span>
+      <span>OmniFusion <b>AI</b></span>
+    </a>
+    <nav class="top-actions" aria-label="Main navigation">
+      <button class="nav-button" id="openIntegrations" type="button"><span class="nav-icon">⌘</span> Integrations</button>
+      <button class="nav-button" id="openHistory" type="button"><span class="nav-icon">↺</span> History</button>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Toggle theme">☾</button>
+    </nav>
+  </header>
+
+  <main class="workspace">
+    <aside class="rail">
+      <div class="rail-section">
+        <p class="eyebrow">Workspace</p>
+        <button class="rail-link active" type="button"><span>✦</span><strong>Orchestrator</strong></button>
+        <button class="rail-link" id="railIntegrations" type="button"><span>⌘</span><strong>AI Library</strong><em id="libraryCount">0</em></button>
+      </div>
+
+      <div class="connection-card">
+        <div class="connection-head">
+          <div><span class="live-dot"></span> Provider network</div>
+          <strong id="connectedCount">0</strong>
+        </div>
+        <div id="providerMiniList" class="provider-mini-list">
+          <div class="mini-skeleton"></div><div class="mini-skeleton"></div><div class="mini-skeleton"></div>
+        </div>
+        <button id="manageProviders" class="text-button" type="button">Manage connections →</button>
+      </div>
+
+      <div class="privacy-note">
+        <span>◈</span>
+        <div><strong>Keys stay server-side</strong><p>Never exposed in the browser or committed to GitHub.</p></div>
+      </div>
+    </aside>
+
+    <section class="main-stage">
+      <div class="hero-copy">
+        <div class="status-badge"><span></span> MULTI-MODEL ORCHESTRATION</div>
+        <h1>One prompt.<br><span>Every useful AI.</span></h1>
+        <p>OmniFusion assembles the right specialists, compares their work, recovers from failures, and delivers one stronger result.</p>
+      </div>
+
+      <section class="composer-card glass">
+        <form id="promptForm">
+          <div class="composer-labels">
+            <label for="promptInput">What should the AI team do?</label>
+            <span id="charCount">0 / 12,000</span>
+          </div>
+          <textarea id="promptInput" maxlength="12000" placeholder="Build a launch plan for my app" required></textarea>
+
+          <div class="quick-prompts" aria-label="Prompt examples">
+            <button type="button" data-prompt="Research the best business idea for 2026">Research an idea</button>
+            <button type="button" data-prompt="Build a modern landing page for my brand">Build a website</button>
+            <button type="button" data-prompt="Create a viral content campaign">Create a campaign</button>
+          </div>
+
+          <div class="composer-footer">
+            <div class="mode-control" role="group" aria-label="Run mode">
+              <button type="button" data-mode="quick">Quick</button>
+              <button type="button" data-mode="council" class="active">Council</button>
+              <button type="button" data-mode="deep">Deep</button>
+            </div>
+            <button class="provider-picker" id="providerPicker" type="button"><span class="stacked-dots"><i></i><i></i><i></i></span><span id="providerPickerText">Auto-select AIs</span><b>⌄</b></button>
+            <button class="run-button" id="runButton" type="submit"><span>Run team</span><i>→</i></button>
+          </div>
+        </form>
+
+        <div class="password-row" id="passwordRow">
+          <span>🔒</span>
+          <input id="appPassword" type="password" autocomplete="current-password" placeholder="App password" />
+          <button id="savePassword" type="button">Use password</button>
+          <small>Required only when APP_PASSWORD is enabled.</small>
+        </div>
+
+        <div id="errorBox" class="error-box" role="alert"></div>
+      </section>
+
+      <section id="executionPanel" class="execution-panel glass" aria-live="polite">
+        <div class="execution-top">
+          <div class="pulse-orb"><span></span></div>
+          <div><strong id="executionTitle">Planning the task</strong><p id="executionDetail">Selecting the strongest available providers…</p></div>
+          <time id="executionTimer">0.0s</time>
+        </div>
+        <div class="progress-track"><span id="progressBar"></span></div>
+        <div class="execution-steps">
+          <div data-step="0" class="active"><i>1</i><span>Understand</span></div>
+          <div data-step="1"><i>2</i><span>Assemble</span></div>
+          <div data-step="2"><i>3</i><span>Collaborate</span></div>
+          <div data-step="3"><i>4</i><span>Judge</span></div>
+          <div data-step="4"><i>5</i><span>Deliver</span></div>
+        </div>
+      </section>
+
+      <section id="resultSection" class="result-section">
+        <article class="result-card glass">
+          <div class="result-toolbar">
+            <div class="result-tabs">
+              <button type="button" class="active" data-result-tab="answer">Final answer</button>
+              <button type="button" data-result-tab="agents">Agent trace <span id="agentCountBadge">0</span></button>
+            </div>
+            <div class="result-actions">
+              <button id="speakResult" type="button" title="Create voiceover">◖))</button>
+              <button id="imageResult" type="button" title="Create image">▧</button>
+              <button id="copyResult" type="button" title="Copy">□</button>
+              <button id="downloadResult" type="button" title="Download">⇩</button>
+            </div>
+          </div>
+
+          <div id="answerPanel" class="result-panel active">
+            <div class="answer-heading">
+              <div><span class="answer-spark">✦</span><div><small>OMNIFUSION VERDICT</small><h2 id="resultGoal">Final answer</h2></div></div>
+              <div id="resultDuration" class="duration-pill">—</div>
+            </div>
+            <div id="answerOutput" class="rich-output"></div>
+            <div id="resultMeta" class="result-meta"></div>
+            <div id="citationArea" class="citation-area"></div>
+          </div>
+
+          <div id="agentsPanel" class="result-panel">
+            <div id="agentGrid" class="agent-grid"></div>
+          </div>
+        </article>
+
+        <div id="mediaResult" class="media-result glass">
+          <div class="media-head"><div><small>MEDIA OUTPUT</small><h3 id="mediaTitle">Generated asset</h3></div><button id="closeMedia" type="button">×</button></div>
+          <div id="mediaBody"></div>
+        </div>
+      </section>
+
+      <footer class="site-footer">
+        <span>OmniFusion AI</span><p>AI can make mistakes. Verify important information and provider licensing.</p>
+      </footer>
+    </section>
+  </main>
+
+  <div id="overlay" class="overlay"></div>
+
+  <aside id="integrationDrawer" class="drawer drawer-wide" aria-hidden="true">
+    <div class="drawer-head">
+      <div><span class="drawer-kicker">CONNECT THE NETWORK</span><h2>AI integration library</h2><p>Direct APIs, model gateways, local runtimes, and external workflows.</p></div>
+      <button class="drawer-close" data-close-drawer type="button">×</button>
+    </div>
+    <div class="drawer-controls">
+      <div class="search-box"><span>⌕</span><input id="integrationSearch" type="search" placeholder="Search ChatGPT, Claude, Canva, Kling…" /></div>
+      <select id="integrationFilter" aria-label="Integration category"><option value="all">All categories</option></select>
+    </div>
+    <div class="legend"><span><i class="legend-api"></i> Direct API</span><span><i class="legend-gateway"></i> Gateway</span><span><i class="legend-external"></i> External workflow</span><span><i class="legend-webhook"></i> Webhook</span></div>
+    <div id="integrationGrid" class="integration-grid"></div>
+  </aside>
+
+  <aside id="providerDrawer" class="drawer" aria-hidden="true">
+    <div class="drawer-head compact">
+      <div><span class="drawer-kicker">ONE-KEY AI NETWORK</span><h2>Select AIs</h2><p>One OpenRouter key loads every supported model. Leave empty for automatic selection.</p></div>
+      <button class="drawer-close" data-close-drawer type="button">×</button>
+    </div>
+    <div id="openRouterSummary" class="network-summary"></div>
+    <div class="provider-search-row">
+      <div class="search-box"><span>⌕</span><input id="providerSearch" type="search" placeholder="Search GPT, Claude, Gemini, Llama, Qwen…" /></div>
+      <label class="free-toggle"><input id="freeModelsOnly" type="checkbox" checked /> Free only</label>
+    </div>
+    <div class="provider-drawer-actions"><button id="selectAllProviders" type="button">Select recommended</button><button id="clearProviders" type="button">Use automatic</button></div>
+    <div id="providerSelectList" class="provider-select-list"></div>
+  </aside>
+
+  <aside id="historyDrawer" class="drawer" aria-hidden="true">
+    <div class="drawer-head compact">
+      <div><span class="drawer-kicker">LOCAL DEVICE</span><h2>Prompt history</h2><p>Saved only in this browser.</p></div>
+      <button class="drawer-close" data-close-drawer type="button">×</button>
+    </div>
+    <div class="history-actions"><button id="clearHistory" type="button">Clear history</button></div>
+    <div id="historyList" class="history-list"></div>
+  </aside>
+
+  <div id="imageModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="imageModalTitle">
+    <div class="modal-card glass">
+      <button class="modal-close" id="closeImageModal" type="button">×</button>
+      <span class="drawer-kicker">IMAGE STUDIO</span>
+      <h2 id="imageModalTitle">Generate an image</h2>
+      <p>Edit the prompt or keep it short.</p>
+      <select id="imageModelSelect" class="media-model-select" aria-label="Image model"><option value="">Automatic image model</option></select>
+      <textarea id="imagePrompt" maxlength="4000"></textarea>
+      <button id="generateImage" class="run-button full" type="button"><span>Generate image</span><i>→</i></button>
+    </div>
+  </div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
