@@ -1,0 +1,10 @@
+{
+  "name": "OmniFusion AI",
+  "short_name": "OmniFusion",
+  "description": "Multi-provider AI orchestration workspace",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07080d",
+  "theme_color": "#080a12",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

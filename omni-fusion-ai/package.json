@@ -1,0 +1,18 @@
+{
+  "name": "omni-fusion-ai",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A multi-provider AI orchestration workspace for Vercel and GitHub.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "node --test tests/*.test.js",
+    "check": "node --check api/orchestrate.js && node --check api/status.js && node --check api/image.js && node --check api/speech.js && node --check api/providers/runtime.js && node --check api/providers/catalog.js && node --check api/lib/routing.js && node --check app.js"
+  },
+  "devDependencies": {
+    "vercel": "latest"
+  }
+}
