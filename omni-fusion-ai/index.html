@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A visible collaborative AI workspace powered by one OpenRouter key." />
+  <meta name="theme-color" content="#080a0f" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <title>OmniFusion AI</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <a class="brand" href="#" aria-label="OmniFusion AI home">
+          <span class="brand-mark"><i></i><i></i><i></i></span>
+          <span>OmniFusion <b>AI</b></span>
+        </a>
+        <button class="sidebar-close" id="sidebarClose" type="button" aria-label="Close sidebar">×</button>
+      </div>
+
+      <button class="new-chat" id="newChat" type="button"><span>＋</span> New chat</button>
+
+      <div class="history-label">Chats</div>
+      <div class="conversation-list" id="conversationList">
+        <div class="empty-mini">No conversations yet</div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="sidebar-action" id="openModels" type="button"><span>◉</span><div><strong>Models</strong><small id="modelCountText">Loading network…</small></div></button>
+        <button class="sidebar-action" id="openIntegrations" type="button"><span>⌘</span><div><strong>Integrations</strong><small id="integrationCountText">AI tools and workflows</small></div></button>
+        <button class="sidebar-action" id="openSettings" type="button"><span>⚙</span><div><strong>Settings</strong><small>Appearance and access</small></div></button>
+      </div>
+    </aside>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-button" id="menuButton" type="button" aria-label="Open menu">☰</button>
+          <button class="mode-picker" id="modePicker" type="button">
+            <span class="mode-icon">✦</span>
+            <span id="modeLabel">Team</span>
+            <small id="modeDetail">Agents share work and revise</small>
+            <b>⌄</b>
+          </button>
+          <div class="mode-menu" id="modeMenu">
+            <button type="button" data-mode="quick"><span>⚡</span><div><strong>Quick</strong><small>One direct model</small></div></button>
+            <button type="button" data-mode="team" class="active"><span>✦</span><div><strong>Team</strong><small>Agents share work and revise</small></div></button>
+            <button type="button" data-mode="deep"><span>◆</span><div><strong>Deep Team</strong><small>More agents and review rounds</small></div></button>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <span class="network-pill" id="networkPill"><i></i><span>Connecting…</span></span>
+          <button class="trace-toggle" id="traceToggle" type="button"><span>◎</span> Team room <b id="traceCount">0</b></button>
+          <button class="theme-button" id="themeToggle" type="button" aria-label="Toggle theme">☾</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <section class="chat-column">
+          <div class="chat-scroll" id="chatScroll">
+            <section class="welcome" id="welcome">
+              <div class="welcome-orbit"><span></span><i></i><b></b></div>
+              <div class="welcome-badge">LIVE COLLABORATIVE AI WORKSPACE</div>
+              <h1>One prompt.<br><span>A team that talks.</span></h1>
+              <p>Agents pass work to each other, review it, reply to feedback, revise the deliverable, and then produce one final result.</p>
+              <div class="suggestions">
+                <button type="button" data-prompt="Build a complete production-ready website for a local painting company. Return one index.html file.">Build a real website</button>
+                <button type="button" data-prompt="Create a launch strategy for a new AI product and challenge the weak assumptions.">Plan a product launch</button>
+                <button type="button" data-prompt="Compare three business ideas, score them, and choose the strongest one.">Compare business ideas</button>
+                <button type="button" data-prompt="Write a high-retention YouTube video outline with a strong opening hook.">Create content</button>
+              </div>
+            </section>
+            <div class="messages" id="messages"></div>
+          </div>
+
+          <footer class="composer-wrap">
+            <form class="composer" id="promptForm">
+              <textarea id="promptInput" maxlength="12000" rows="1" placeholder="Message the AI team…" required></textarea>
+              <div class="composer-bottom">
+                <div class="composer-tools">
+                  <button type="button" id="modelButton" title="Choose models">◉ <span id="selectedModelText">Auto models</span></button>
+                  <span id="charCount">0 / 12,000</span>
+                </div>
+                <button class="send-button" id="runButton" type="submit" aria-label="Send prompt">→</button>
+              </div>
+            </form>
+            <div class="password-row" id="passwordRow">
+              <span>Private app password:</span>
+              <input id="appPassword" type="password" autocomplete="current-password" />
+              <button id="savePassword" type="button">Save</button>
+            </div>
+            <p class="composer-note">Enter to send · Shift+Enter for a new line · Free models have changing availability</p>
+            <div class="error-banner" id="errorBox" role="alert"></div>
+          </footer>
+        </section>
+
+        <aside class="trace-panel" id="tracePanel">
+          <div class="trace-head">
+            <div><span>SHARED WORKSPACE</span><h2>AI Team Room</h2></div>
+            <button id="traceClose" type="button">×</button>
+          </div>
+          <div class="room-tabs">
+            <button id="teamRoomTab" class="active" type="button">Team chat</button>
+            <button id="executionTab" type="button">Execution proof</button>
+          </div>
+          <section class="room-pane active" id="teamRoomPane">
+            <div class="team-room-status" id="teamRoomStatus"><i></i><span>No collaboration yet.</span></div>
+            <div class="team-chat" id="teamChat">
+              <div class="team-empty">The actual agent handoffs, reviews, and revisions will appear here.</div>
+            </div>
+          </section>
+          <section class="room-pane" id="executionPane">
+            <div class="verification-card" id="verificationCard">
+              <div class="verification-icon">◎</div>
+              <div><strong>No run yet</strong><p>Completed API calls will appear here.</p></div>
+            </div>
+            <div class="run-summary" id="runSummary"></div>
+            <div class="timeline" id="timeline"></div>
+          </section>
+          <div class="trace-foot">Team messages are visible work notes and handoffs sent between model calls—not hidden chain-of-thought.</div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal" id="modelsModal" aria-hidden="true">
+    <div class="modal-card modal-wide">
+      <div class="modal-head"><div><span>ONE OPENROUTER KEY</span><h2>Choose the AI team</h2><p>Select specific free models or leave everything empty for automatic routing.</p></div><button class="modal-close" data-close-modal type="button">×</button></div>
+      <div class="modal-tools">
+        <input id="modelSearch" type="search" placeholder="Search GPT, Gemini, Llama, DeepSeek, Qwen…" />
+        <label><input id="freeOnly" type="checkbox" checked /> Free only</label>
+        <button id="clearModels" type="button">Use automatic</button>
+      </div>
+      <div class="network-stats" id="networkStats"></div>
+      <div class="model-grid" id="modelGrid"><div class="loading-card">Loading OpenRouter models…</div></div>
+    </div>
+  </div>
+
+  <div class="modal" id="integrationsModal" aria-hidden="true">
+    <div class="modal-card modal-wide">
+      <div class="modal-head"><div><span>COMPATIBILITY LIBRARY</span><h2>AI integrations</h2><p>Direct APIs, OpenRouter models, local runtimes, webhooks, and external workflows.</p></div><button class="modal-close" data-close-modal type="button">×</button></div>
+      <div class="modal-tools"><input id="integrationSearch" type="search" placeholder="Search Canva, CapCut, Claude, Kling…" /><select id="integrationFilter"><option value="all">All categories</option></select></div>
+      <div class="integration-grid" id="integrationGrid"></div>
+    </div>
+  </div>
+
+  <div class="modal" id="settingsModal" aria-hidden="true">
+    <div class="modal-card settings-card">
+      <div class="modal-head"><div><span>WORKSPACE</span><h2>Settings</h2></div><button class="modal-close" data-close-modal type="button">×</button></div>
+      <label class="setting-row"><div><strong>Open Team Room automatically</strong><small>Show agents talking and handing off work while the run happens.</small></div><input id="autoOpenTrace" type="checkbox" checked /></label>
+      <label class="setting-row"><div><strong>Collaboration depth</strong><small>One loop is faster. Two loops adds another review and revision.</small></div><select id="collaborationRounds"><option value="1">1 review loop</option><option value="2">2 review loops</option></select></label>
+      <label class="setting-row"><div><strong>Save chats locally</strong><small>Conversation history stays in this browser.</small></div><input id="saveChats" type="checkbox" checked /></label>
+      <button class="danger-button" id="clearAllChats" type="button">Clear all local chats</button>
+    </div>
+  </div>
+
+  <script src="/app.js" type="module"></script>
+</body>
+</html>
