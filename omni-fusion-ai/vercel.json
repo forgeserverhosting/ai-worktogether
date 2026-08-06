@@ -1,0 +1,49 @@
+{
+  "functions": {
+    "api/image.js": {
+      "maxDuration": 60
+    },
+    "api/speech.js": {
+      "maxDuration": 60
+    },
+    "api/team-step.js": {
+      "maxDuration": 60
+    },
+    "api/project-step.js": {
+      "maxDuration": 60
+    },
+    "api/package-project.js": {
+      "maxDuration": 30
+    },
+    "api/import-website.js": {
+      "maxDuration": 30
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=()"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; img-src 'self' data: https:; media-src 'self' blob: data: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; font-src 'self'; frame-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'"
+        }
+      ]
+    }
+  ]
+}
