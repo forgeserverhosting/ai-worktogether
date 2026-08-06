@@ -1,0 +1,16 @@
+{
+  "name": "OmniFusion Compact Website Builder",
+  "short_name": "OmniFusion",
+  "description": "A compact website-first AI chat with visible multi-model collaboration and downloadable projects.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07080d",
+  "theme_color": "#080a12",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
